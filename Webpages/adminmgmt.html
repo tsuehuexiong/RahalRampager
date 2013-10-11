@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Admin Management Page</title>
+
+  
+  
+  <style>
+#menu { width: 100%;
+border: none; margin: 0px; float:right; position:relative; list-style-type:none; padding:0px;
+z-index:5; }
+
+#menu li { float:right; margin-right:10px;
+position:relative; }
+
+#menu a { display:block; padding:5px; color:blue;
+background:#fff; }
+
+#menu a:hover { color:green; background:#fff;
+text-decoration:underline; }
+
+#menu ul { background:#fff; list-style:none; position:absolute; left:-99999px; }
+
+#menu ul li { padding-top:1px; width: 100%; border: none; float:none; }
+
+#menu li:hover ul{ left:-41px; }
+
+#menu li:hover a { text-decoration:underline; }
+
+#profile { width: 80%; border: none; margin: 20px; position:absolute; }
+#profile {
+  border:  none;
+  margin: 20px;
+  width: 80%;
+  position: absolute;
+}
+h1 {
+  font-family: Arial,Helvetica,sans-serif;
+  font-weight: bold;
+}
+body {
+  font-family: Arial,Helvetica,sans-serif;
+}
+  </style>
+</head><body>
+<ul id="menu">
+
+  <li><a href="#">Sign Out</a></li>
+  <li><a href="#">Reports</a>
+    <ul>
+      <li><a href="#">Overall Commission</a></li>
+      <li><a href="#">Sales Summary</a></li>
+    </ul>
+  </li>
+  <li><a href="#">User Management</a></li>
+  <li><a href="#">eSAS Home</a></li>
+</ul>
+
+<h1>Admin Management</h1>
+
+<br>
+
+<div id="profile">
+<center><button type="button" align="center">User List</button>
+<button type="button" align="center">Reports</button>
+</center>
+</div>
+
+</body></html>

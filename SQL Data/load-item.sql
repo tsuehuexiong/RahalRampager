@@ -1,0 +1,4 @@
+LOAD DATA LOCAL INFILE "~/queries/item.dat"
+INTO TABLE Item
+FIELDS ENCLOSED BY "\"" TERMINATED BY ","
+;

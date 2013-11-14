@@ -1,0 +1,419 @@
+Login Page
+
+The User enters his/her username and password and hits the submit button.  The username and password is compared to
+the other combinations in the database.  If there is a match, the isAdmin boolean is received using a function with the given username
+and password as parameters, checked to determine what kind of User it is, and the User is redirected to the appropriate page.
+If there is not a match, the User is sent back to the login page with an appropriate error message.
+
+-- login page
+select username, password 
+from User;
+
++----------+-----------------+
+| username | password        |
++----------+-----------------+
+| ismith   | applepie        |
+| lsmith   | applesauce      |
+| w1smith  | applecrisp      |
+| wsmith   | 012345678912345 |
++----------+-----------------+
+
+select isAdmin
+from User
+where username = 'ismith' and password = 'applepie';
+
++---------+
+| isAdmin |
++---------+
+|       0 |
++---------+
+
+Customer Management Page
+
+This is a hub page that includes buttons to view the user’s own profile, the selling management, bidding management, and leave feedback pages. 
+
+View Profile
+
+The user can view their profile information from this page. There are buttons on this page to update their profile and view their seller or buyer feedback that they have received.
+
+-- view your own profile
+select *
+from Customer
+where cID = users cID
+-- Example cID = 4
+
++-----+----------+-------+-------+------------------+--------+-------+------------+-------------------+--------------+-------------+
+| cID | username | fName | lName | ccNumber         | ccType | ccExp | phone      | email             | sellerRating | buyerRating |
++-----+----------+-------+-------+------------------+--------+-------+------------+-------------------+--------------+-------------+
+|   4 | w1smith  | will  | smith | 0123456789123454 | VISA   | 08/13 | 3334445555 | w1smith@gmail.com |            9 |           8 |
++-----+----------+-------+-------+------------------+--------+-------+------------+-------------------+--------------+-------------+
+
+My Buyer Feedback
+
+This page displays buyer feedback information including the itemID, seller ID, buyer ID, item name, overall satisfaction, payment promptness, and a comment. These are results from sellers rating the current user as buyers of their items.
+
+-- display buyer feedback
+select *
+from BuyerRating
+--where buyerID = cID
+-- Example cID = 4
+
++--------+----------+---------+--------------+--------------+---------+----------------------+
+| itemID | sellerID | buyerID | itemName     | satisfaction | payment | comment              |
++--------+----------+---------+--------------+--------------+---------+----------------------+
+|      3 |        2 |       4 | The Prestige |            8 |       1 | I enjoyed the movie. |
++--------+----------+---------+--------------+--------------+---------+----------------------+
+
+My Seller Feedback
+
+This page displays all feedback that they have received from buyers of their item. This information includes the itemID, seller ID, buyer Id, item name, overall satisfaction, quality of item, delivery, and a comment.
+
+-- display seller feedback
+select *
+from SellerRating
+--where sellerID = cID
+-- Example cID = 2
+
++--------+----------+---------+--------------+---------+----------+---------+
+| itemID | sellerID | buyerID | satisfaction | quality | delivery | comment |
++--------+----------+---------+--------------+---------+----------+---------+
+|      3 |        2 |       6 |            1 |       7 |        0 | NULL    |
++--------+----------+---------+--------------+---------+----------+---------+
+
+Update Profile
+
+The user can update any part of their profile except username, cID, buyer rating, and seller rating.
+This information will be displayed informs that can be changed and updated by hitting a button.
+
+-- update profile
+update Customer 
+set fName = newFName, lName = newLName, ccNumber = newccNumber,ccType = newccType, ccExp = newccExp,
+phone = newPhone, email = newEmail
+where cID = currentUser;
+-- Example cID = 11 and fName='Just', lName='in', ccNumber='0987654321098765', ccExp='12/15', phone='0987654321', email='jspringer@yahoo.com'
+
++-----+-----------+---------+-------+------------------+------------+-------+------------+---------------------+--------------+-------------+
+| cID | username  | fName   | lName | ccNumber         | ccType     | ccExp | phone      | email               | sellerRating | buyerRating |
++-----+-----------+---------+-------+------------------+------------+-------+------------+---------------------+--------------+-------------+
+|   1 | wsmith    | william | smith | 0123456789123456 | AMEREXPRES | 03/13 | 1112223333 | wsmith@gmail.com    |            5 |           2 |
+|   2 | lsmith    | liam    | smith | 0123456789123455 | MASTERCARD | 05/15 | 2223334444 | lsmith@gmail.com    |            7 |           3 |
+|   3 | ismith    | ill     | smith | 0123456789123455 | CAPITALONE | 06/14 | 2223334444 | ismith@gmail.com    |            3 |           1 |
+|   4 | w1smith   | will    | smith | 0123456789123454 | VISA       | 08/13 | 3334445555 | w1smith@gmail.com   |            9 |           8 |
+|  11 | jspringer | Just    | in    | 0987654321098765 | Visa       | 12/15 | 0987654321 | jspringer@yahoo.com |         NULL |        NULL |
++-----+-----------+---------+-------+------------------+------------+-------+------------+---------------------+--------------+-------------+
+
+Selling Management
+
+This hub page has buttons leading to add items to auction and view the list of items sold.
+
+Add Items
+
+The user inputs their item information and submits it to be put on auction. 
+
+-- Add Items
+Insert into Item (iName, category, auctionStart, auctionEnd, startPrice, description, photo, sellerID, currentBid, status)
+-- Example values ('Buick LeSabre', 'car', now(), now(), '10000', 'Maroon 96', '0', '3', '12500', '0')
+
++--------+---------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+| itemID | iName                     | category | auctionStart        | auctionEnd          | startPrice | description | photo | sellerID | currentBid | status |
++--------+---------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+|      1 | To Kill a Mocking Bird    | book     | 2013-11-11 16:03:33 | 2013-05-02 04:06:01 |          5 | good        |     0 |        1 |          8 |      2 |
+|      2 | To Kill a Mocking Bird    | book     | 2013-11-02 04:06:01 | 2013-12-02 04:06:01 |          5 | good        |     0 |        2 |          2 |      1 |
+|      3 | The Prestige              | Movie    | 2013-04-02 04:06:01 | 2013-05-02 04:06:01 |          5 | OK          |     1 |        3 |          8 |      1 |
+|      4 | Final Fantasy Tatics      | game     | 2013-04-06 04:06:01 | 2013-05-08 04:06:01 |          7 | very good   |     0 |        4 |         12 |      0 |
+|      5 | The Lonesome Crowded West | CD       | 2013-11-11 15:23:58 | 2013-05-08 04:06:01 |          7 | very good   |     0 |        1 |         10 |      2 |
+|      8 | Buick LeSabre             | car      | 2013-11-12 19:19:32 | 2013-11-12 19:19:32 |      10000 | Maroon 96   |     0 |        3 |      12500 |      0 |
++--------+---------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+
+List Items on Auction
+
+This page will list all the User's past and current auctions sorted by status.
+There will be links for each item that lead to the item info, bidder list, and rate buyer if someone bought that item. 
+
+-- list items listed by seller (every item regardless of status)
+select itemID, iName, category, currentBid, status
+from Item 
+-- where sellerID = current user
+order by status;
+-- Example sellerID = 1;
+
++--------+---------------------------+----------+------------+--------+
+| itemID | iName                     | category | currentBid | status |
++--------+---------------------------+----------+------------+--------+
+|      1 | To Kill a Mocking Bird    | book     |          8 |      2 |
+|      5 | The Lonesome Crowded West | CD       |         10 |      2 |
++--------+---------------------------+----------+------------+--------+
+
+Item Info
+
+This page displays the information about an item on auction. This includes itemID, item name, category, auction start and end times, the starting price, item description, photo, the seller ID number, current bid, and status of the item. There is also a button that lets the user bid on the item or see the bidding history of that item.
+
+-- Item Info
+Select *
+From Item
+-- where itemID = ?
+-- Example itemID = 2
+
++--------+------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+| itemID | iName                  | category | auctionStart        | auctionEnd          | startPrice | description | photo | sellerID | currentBid | status |
++--------+------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+|      2 | To Kill a Mocking Bird | book     | 2013-11-02 04:06:01 | 2013-12-02 04:06:01 |          5 | good        |     0 |        2 |          2 |      1 |
++--------+------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+
+Bidder List
+
+This page will show just the usernames, buyer ratings, and bid times for bids on an item.  It will not show the maximum bid, because this could be used unfairly. This list is shown while the item is currently on auction (status 0).
+
+-- Bidder List (For Buyer)
+Select c.username, a.bidTime, c.buyerRating
+from Auction a, Customer c
+-- where itemID = current item being viewed and a.bidderID = c.cID
+order by bidTime Desc;
+-- Example itemID = 2
+
++----------+---------------------+-------------+
+| username | bidTime             | buyerRating |
++----------+---------------------+-------------+
+| ismith   | 2013-11-11 14:33:07 |           1 |
+| wsmith   | 2013-04-06 04:06:01 |           2 |
++----------+---------------------+-------------+
+
+Rate Buyer
+
+The customer that sold the item can rate the customer that bought the item.
+The user will input data for overall satisfaction and payment promptness into a form and hit the submit button.  
+
+-- Rate Buyer
+Insert into BuyerRating Values ();
+-- Example Values ('2', '2', '1', 'To Kill a Mocking Bird', '10', '10', 'Awesome')
+
++--------+----------+---------+------------------------+--------------+---------+----------------------+
+| itemID | sellerID | buyerID | itemName               | satisfaction | payment | comment              |
++--------+----------+---------+------------------------+--------------+---------+----------------------+
+|      1 |        1 |       3 | To Kill a Mocking Bird |            1 | 1000000 | I loved the book!    |
+|      2 |        2 |       1 | To Kill a Mocking Bird |           10 |      10 | Awesome              |
+|      3 |        2 |       4 | The Prestige           |            8 |       1 | I enjoyed the movie. |
++--------+----------+---------+------------------------+--------------+---------+----------------------+
+
+Bidding Management
+
+This page has buttons leading to a list of items bid on and a search for items to buy. 
+
+List of Items Bid On
+
+The page will display all items the User has bid on past and present sorted by itemID.
+
+-- list items bid on
+select i.itemID, i.iName, i.category, i.auctionStart, i.auctionEnd, i.startPrice, i.currentBid, a.bidderID, a.maxBid as YourMaxBid
+from Item i, Auction a
+where a.bidderID = currentUser and i.itemID = a.itemID
+and bidTime = (select max(bidTime) from Auction where i.itemID = itemID and bidderID = currentUser);
+-- Example current user = 3
+
++--------+------------------------+----------+---------------------+---------------------+------------+------------+----------+------------+
+| itemID | iName                  | category | auctionStart        | auctionEnd          | startPrice | currentBid | bidderID | YourMaxBid |
++--------+------------------------+----------+---------------------+---------------------+------------+------------+----------+------------+
+|      1 | To Kill a Mocking Bird | book     | 2013-11-11 14:34:27 | 2013-05-02 04:06:01 |          5 |          5 |        3 | 3          |
+|      2 | To Kill a Mocking Bird | book     | 2013-11-02 04:06:01 | 2013-12-02 04:06:01 |          5 |          2 |        3 | 3          |
+|      3 | The Prestige           | Movie    | 2013-04-02 04:06:01 | 2013-05-02 04:06:01 |          5 |          8 |        3 | 5          |
+|      4 | Final Fantasy Tatics   | game     | 2013-04-06 04:06:01 | 2013-05-08 04:06:01 |          7 |         12 |        3 | 12         |
++--------+------------------------+----------+---------------------+---------------------+------------+------------+----------+------------+
+
+Search Items
+
+The customer will input data into a search form and then hit the submit button.
+The page will forward the customer to a results page including links to items that fit their search criteria.
+
+Results
+
+The customer will see the results of their search query for items that are still available to bid on.
+The customer can then click on an item to view the auction profile for that item.
+
+-- Search Item
+Select *
+from Item
+-- where iName like %?% and category = ? and status = '0'
+order by auctionEnd;
+-- Example iName like '%final%' and category like '%%'
+
++--------+----------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+| itemID | iName                | category | auctionStart        | auctionEnd          | startPrice | description | photo | sellerID | currentBid | status |
++--------+----------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+|      4 | Final Fantasy Tatics | game     | 2013-04-06 04:06:01 | 2013-05-08 04:06:01 |          7 | very good   |     0 |        4 |         12 |      0 |
++--------+----------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+
+Item Profile
+
+This page will display all the item information for the selected item.  The customer can also view the seller's profile page, view the list of bids for the item, and bid on the item.
+
+-- Item Profile
+Select *
+From Item
+-- where itemID = ?
+-- Example itemID = 2
+
++--------+------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+| itemID | iName                  | category | auctionStart        | auctionEnd          | startPrice | description | photo | sellerID | currentBid | status |
++--------+------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+|      2 | To Kill a Mocking Bird | book     | 2013-11-02 04:06:01 | 2013-12-02 04:06:01 |          5 | good        |     0 |        2 |          2 |      1 |
++--------+------------------------+----------+---------------------+---------------------+------------+-------------+-------+----------+------------+--------+
+
+Profile Page
+
+The user can view a person's profile that displays their username, email, seller rating, and 
+buyer rating.  The page will also have links to the seller's buyer and seller feedback. 
+
+-- display users profiles
+select username, email, sellerRating, buyerRating
+from Customer
+-- where cID = specified user's ID
+-- Example cID = 8;
+
++-----------+---------------------+--------------+-------------+
+| username  | email               | sellerRating | buyerRating |
++-----------+---------------------+--------------+-------------+
+| jspringer | jspringer@gmail.com |         NULL |        NULL |
++-----------+---------------------+--------------+-------------+
+
+Bid On Item
+
+The user will input a max bid and hit the submit button. This inserts the information into the Auction table and updates the current bid for the item. 
+
+-- Add New Bid
+Insert into Auction Values()
+-- Example Values ('5', '3', '20', now())
+
++--------+----------+--------+---------------------+
+| itemID | bidderID | maxBid | bidTime             |
++--------+----------+--------+---------------------+
+|      5 |        2 | 10     | 2013-11-11 15:23:01 |
+|      5 |        3 | 20     | 2013-11-12 20:16:25 |
++--------+----------+--------+---------------------+
+
+
+Leave Feedback
+
+The User selects from two buttons that redirect them to pages where they can rate the sellers of items they have won and the buyers of items that they have sold.
+
+List Of Items Sold
+
+This page will display all items that have been sold (status=2) by the current User.
+The User can then select links to rate the buyer or view the item's info.
+
+-- list items sold (auction status is ended and someone bought it)
+select i.itemID, i.iName, i.category, i.auctionStart, i.auctionEnd, i.startPrice, i.currentBid as soldPrice, c.username, c.email 
+from Item i, Customer c, Auction a
+-- where i.sellerID = current user and status = '2' and a.itemID = i.itemID and c.cID = a.bidderID and a.maxBid >= i.currentBid
+-- Example current user = 1
+
+--------+---------------------------+----------+---------------------+---------------------+------------+-----------+----------+-------------------+
+| itemID | iName                     | category | auctionStart        | auctionEnd          | startPrice | soldPrice | username | email             |
++--------+---------------------------+----------+---------------------+---------------------+------------+-----------+----------+-------------------+
+|      1 | To Kill a Mocking Bird    | book     | 2013-11-11 14:34:27 | 2013-05-02 04:06:01 |          5 |         5 | w1smith  | w1smith@gmail.com |
+|      5 | The Lonesome Crowded West | CD       | 2013-11-11 15:23:58 | 2013-05-08 04:06:01 |          7 |        10 | lsmith   | lsmith@gmail.com  |
++--------+---------------------------+----------+---------------------+---------------------+------------+-----------+----------+-------------------+
+
+List Of Items Bought
+
+This page will display all items that have been bought by the current User.
+The User can then select links to rate the seller or view the item's info.
+
+-- list items bought
+select i.itemID, i.iName, i.category, i.auctionStart, i.auctionEnd, i.startPrice, a.bidderID, i.currentBid as finalBid, a.maxBid as YourMaxBid
+from Item i, Auction a
+where a.bidderID = currentUser and i.itemID = a.itemID and i.status=2
+and bidTime = (select max(bidTime) from Auction where i.itemID = itemID and bidderID = currentUser);
+-- Example current user = 3
+
++--------+---------------------------+----------+---------------------+---------------------+------------+----------+----------+------------+
+| itemID | iName                     | category | auctionStart        | auctionEnd          | startPrice | bidderID | finalBid | YourMaxBid |
++--------+---------------------------+----------+---------------------+---------------------+------------+----------+----------+------------+
+|      1 | To Kill a Mocking Bird    | book     | 2013-11-11 16:03:33 | 2013-05-02 04:06:01 |          5 |        3 |        8 | 3          |
+|      5 | The Lonesome Crowded West | CD       | 2013-11-11 15:23:58 | 2013-05-08 04:06:01 |          7 |        3 |       10 | 20         |
++--------+---------------------------+----------+---------------------+---------------------+------------+----------+----------+------------+
+
+Rate Seller
+
+The User that bought the item can rate the user they bought it from. The User will input data for each of the fields of a form and hit the submit button.
+
+
+-- Rate Seller
+Insert into SellerRating Values ();
+-- Example Values ('2', '2', '1', '10', '10', '10', 'Awesome')
+
++--------+----------+---------+--------------+---------+----------+-----------------------+
+| itemID | sellerID | buyerID | satisfaction | quality | delivery | comment               |
++--------+----------+---------+--------------+---------+----------+-----------------------+
+|      1 |        3 |       1 |           10 | 1000000 |       10 | I loved the book too! |
+|      2 |        2 |       1 |           10 |      10 |       10 | Awesome               |
+|      3 |        2 |       6 |            1 |       7 |        0 | NULL                  |
++--------+----------+---------+--------------+---------+----------+-----------------------+
+
+Admin Management 
+
+The admin has the option of two buttons: one shows a list of all the users and the other shows the reports page.
+
+
+User List
+Lists all the users by userID for the admin to see. This page also allows the admin to add a user.
+
+-- List users (for admin)
+SELECT cID,username,fName,lName,email FROM Customer;
+
++-----+-----------+---------+-------+---------------------+
+| cID | username  | fName   | lName | email               |
++-----+-----------+---------+-------+---------------------+
+|   1 | wsmith    | william | smith | wsmith@gmail.com    |
+|   2 | lsmith    | liam    | smith | lsmith@gmail.com    |
+|   3 | ismith    | ill     | smith | ismith@gmail.com    |
+|   4 | w1smith   | will    | smith | w1smith@gmail.com   |
+|  11 | jspringer | Just    | in    | jspringer@yahoo.com |
++-----+-----------+---------+-------+---------------------+
+
+-- Add user (for admin, can choose admin status. customers isAdmin = false)
+INSERT INTO User (username, password, isAdmin)
+VALUES -- Example Data ('pjnowak', 'pjnowak', 0)
+-- get values from form
+
++-----------+-----------------+---------+
+| username  | password        | isAdmin |
++-----------+-----------------+---------+
+| ismith    | applepie        |       0 |
+| jspringer | jspringer       |       0 |
+| lsmith    | applesauce      |       0 |
+| pjnowak   | pjnowak         |       0 |
+| w1smith   | applecrisp      |       0 |
+| wsmith    | 012345678912345 |       1 |
++-----------+-----------------+---------+
+
+
+INSERT INTO Customer (cID, username, fName, lName, ccNumber, ccType, ccExp, phone, email)
+VALUES -- Example Data ('', 'pjnowak', 'Phil', 'Nowak', '987654321012345', 'Visa', '11/15', '1118675309', 'pjnowak@csbsju.edu')
+-- get values from form
+
++-----+-----------+---------+-------+------------------+------------+-------+------------+---------------------+--------------+-------------+
+| cID | username  | fName   | lName | ccNumber         | ccType     | ccExp | phone      | email               | sellerRating | buyerRating |
++-----+-----------+---------+-------+------------------+------------+-------+------------+---------------------+--------------+-------------+
+|   1 | wsmith    | william | smith | 0123456789123456 | AMEREXPRES | 03/13 | 1112223333 | wsmith@gmail.com    |            5 |           2 |
+|   2 | lsmith    | liam    | smith | 0123456789123455 | MASTERCARD | 05/15 | 2223334444 | lsmith@gmail.com    |            7 |           3 |
+|   3 | ismith    | ill     | smith | 0123456789123455 | CAPITALONE | 06/14 | 2223334444 | ismith@gmail.com    |            3 |           1 |
+|   4 | w1smith   | will    | smith | 0123456789123454 | VISA       | 08/13 | 3334445555 | w1smith@gmail.com   |            9 |           8 |
+|  11 | jspringer | Just    | in    | 0987654321098765 | Visa       | 12/15 | 0987654321 | jspringer@yahoo.com |         NULL |        NULL |
+|  12 | pjnowak   | Phil    | Nowak | 987654321012345  | Visa       | 11/15 | 1118675309 | pjnowak@csbsju.edu  |         NULL |        NULL |
++-----+-----------+---------+-------+------------------+------------+-------+------------+---------------------+--------------+-------------+
+
+
+Reports
+
+The admin has the option for two buttons: Overall commission and sales summary.  
+
+Overall commission lists all the users who have sold items and the amount of commissions for each 
+
+INSERT VIEWS HERE (SELECT * FROM COMMISSIONREPORT)
+
+
+Sales Summary
+
+Lists all the items sold sorted by category and gives the commision and selling price for each.  
+
+INSERT VIEWS HERE(SELECT * FROM SALESSUMMARYREPORT)

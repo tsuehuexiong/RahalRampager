@@ -18,11 +18,10 @@ http-equiv="content-type">
 <center>
 <h1> Welcome to eSAS </h1>
 <span> Please enter your login information below. </span>
-<form method="post" action="" name="LoginForm">
+<form method="post" action="Login_Action.jsp" name="LoginForm">
 <span> Username: </span> <input name="Username"><br>
 <span> Password: </span> <input name="Password" type="password"><br> <br>
 <input name="Submit" value="Submit" type="submit">
-<a href="AdminHome.jsp"> <input type="submit" value="Admin Home" name="Admin Home" /> </a>
 </form>
 
 <br>

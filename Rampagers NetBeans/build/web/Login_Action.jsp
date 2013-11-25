@@ -5,30 +5,22 @@
 --%>
 
 <%@ page language="java" import="java.sql.*"%>
-
+<jsp:useBean id="user" class="RRbeans.User" scope="session"/>
+<jsp:setProperty name="user" property="*"/>
 <% 
-    String username = "request.getParameter(Username)";
-    String password = "request.getParameter(Password)";
-    try {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection myConnection = DriverManager.getConnection("jdbc:mysql://devsrv.cs.csbsju.edu:3306/RahalRampagers", "JSpringer", "JSpringer");
-        
-        Statement stmt = myConnection.createStatement();
-        String queryString = "Select username, password From User Where username = '" + username + "' and password = '" + password + "'";
-        ResultSet rs = stmt.executeQuery(queryString);
-        if (!rs.next()){
-            response.sendRedirect("Login.jsp?error=1");
-        }
-        else {
-            response.sendRedirect("AdminHome.jsp");
-            
-        }
+    int state = user.login();
+    if (state == 0){
+        response.sendRedirect("CustomerHome.jsp");
     }
-    catch (Exception e){
-        e.printStackTrace();
+    else if (state == 1){
+        response.sendRedirect("AdminHome.jsp");
+    }
+    else if (state == 2){
+        response.sendRedirect("Login.jsp?error=0");
+    }
+    else {
+        response.sendRedirect("Login.jsp?error=1");
     }
     
     
-    
-    response.sendRedirect("AdminHome.jsp");
 %>

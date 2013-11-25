@@ -18,14 +18,21 @@ http-equiv="content-type">
 <center>
 <h1> Welcome to eSAS </h1>
 <span> Please enter your login information below. </span>
-<form method="post" action="Login_Action.jsp" name="LoginForm">
-<span> Username: </span> <input name="Username"><br>
-<span> Password: </span> <input name="Password" type="password"><br> <br>
+<form method="post" action="Login_Action.jsp" name="Login">
+<span> Username: </span> <input name="username" value=""><br>
+<span> Password: </span> <input name="password" type="password" value=""><br> <br>
 <input name="Submit" value="Submit" type="submit">
 </form>
-
-<br>
-<br>
+<% String error = request.getParameter("error");
+if (error != null){
+    if (error.equals("0")){
+        out.println("Incorrect Username/Password \n");
+    }
+    else if (error.equals("1")){
+       out.println("Unknown error, Please try again later");
+    }
+}
+%>
 </center>
 </body>
 </html>

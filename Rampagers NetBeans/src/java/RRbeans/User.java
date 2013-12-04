@@ -99,6 +99,7 @@ public class User {
                 }
             }
             else {
+                this.loggedIn = false;
                 return 2;
             }
         }
@@ -108,6 +109,19 @@ public class User {
             this.loggedIn = false;
             return 3;
         }
+    }
+    
+    /**
+     * sets loggedIn class field to false
+     * @throws IllegalStateException if the method is called when loggedIn = false
+     */
+    public void logout() throws IllegalStateException {
+        if(! isLoggedIn())
+            throw new IllegalStateException("MUST BE LOGGED IN FIRST!");
+        
+        this.username = "";
+        this.loggedIn = false;
+        this.password = "";
     }
     
     

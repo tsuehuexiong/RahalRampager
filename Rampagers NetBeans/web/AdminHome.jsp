@@ -15,8 +15,9 @@ http-equiv="content-type">
 <h1>Admin Management</h1>
 <br>
 <div id="profile">
-<center><button type="button" align="center">User List</button>
-<button type="button" align="center">Reports</button>
+<center>
+    <a href="UserManagement.jsp"><button type="button" align="center">User List</button></a>
+    <a href="Reports.jsp"><button type="button" align="center">Reports</button></a>
 </center>
 </div>
 </body>

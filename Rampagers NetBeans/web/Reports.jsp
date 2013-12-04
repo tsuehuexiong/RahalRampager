@@ -8,9 +8,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Reports</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+    <center>
+<div>
+    <a href="OverallCommissionReport.jsp"><button type="button" align="center">Overall Commission</button></a>
+</div>
+<div>
+    <a href="SalesSummaryReport.jsp"><button type="button" align="center">Sales Summary</button></a>
+</div>
+</center>
+</body></html>

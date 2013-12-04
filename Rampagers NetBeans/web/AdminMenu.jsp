@@ -12,11 +12,10 @@
 <link href="eSASsheet.css" rel="stylesheet" type="text/css">
 <meta content="text/html; charset=ISO-8859-1"
 http-equiv="content-type">
-<link rel="stylesheet" href="eSASsheet" type="text/css">
 </head>
 <body>
 <ul id="menu">
-<li><a href="Logout_Action">Sign Out</a></li>
+<li><a href="Logout_Action.jsp">Sign Out</a></li>
 <li><a href="Reports.jsp">Reports</a>
 <ul>
 <li><a href="OverallCommissionReport.jsp">Overall Commission</a></li>

@@ -4,12 +4,15 @@
     Author     : jespringer
 --%>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%@ page language="java" import="java.sql.*"%>
+<jsp:useBean id="user" class="jespringer.RRbeans.User" scope="session"/>
+<%
+    try{
+        user.logout();
+    }
+    catch(IllegalStateException ise){
+        out.println(ise.getMessage());
+    }
+    response.sendRedirect("Login.jsp");
+    
+%>

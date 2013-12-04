@@ -1,23 +1,18 @@
-package RRbeans;
-
-
-
+package kakutzke.RahalRampagers;
+import java.io.*;
+import java.sql.*;
 
 public class SellerRating {
     
     private int itemID;
-    private int sellerID;
-    private int buyerID;
-    private String itemName;
-    private int satisfaction;
-    private int quality;
-    private int delivery;
-    private String comment;
-
-    public SellerRating(){
-        
+    private int sellerID, buyerID;
+    private String itemName, comment;
+    private int satisfaction, quality, delivery;
+	
+    public SellerRating() {
+		
     }
-    
+
     public int getItemID() {
         return itemID;
     }
@@ -50,6 +45,14 @@ public class SellerRating {
         this.itemName = itemName;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public int getSatisfaction() {
         return satisfaction;
     }
@@ -73,13 +76,40 @@ public class SellerRating {
     public void setDelivery(int delivery) {
         this.delivery = delivery;
     }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    
+    public void addSellerRating() {
+        Connection con = DBConnection.openDBConnection();
+        try {
+            String queryString = "insert into SellerRating values(itemID=?, sellerID=?, buyerID=?, itemName=?, satisfaction=?, quality=?, delivery=?, comment=?)";
+            PreparedStatement ps = con.prepareStatement(queryString);
+            ps.clearParameters();
+            ps.setInt(1, this.getItemID());
+            ps.setInt(2, this.getSellerID());
+            ps.setInt(3, this.getBuyerID());
+            ps.setString(4, this.getItemName());
+            ps.setInt(5, this.getSatisfaction());
+            ps.setInt(6, this.getQuality());
+            ps.setInt(7, this.getDelivery());
+            ps.setString(8, this.getComment());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
     
+    public ResultSet getSellerRating() {
+        Connection con = DBConnection.openDBConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String qs = "select * from SellerRating where itemID ='" + this.getItemID()+"'";
+            ResultSet rs = stmt.executeQuery(qs);
+            return rs;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 }
+	

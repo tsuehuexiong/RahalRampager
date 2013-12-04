@@ -1,21 +1,18 @@
-package RRbeans;
-
-
-
+package kakutzke.RahalRampagers;
+import java.io.*;
+import java.sql.*;
 
 public class BuyerRating {
     
     private int itemID;
-    private int sellerID;
-    private int buyerID;
-    private String itemName;
-    private int satisfaction;
-    private int payment;
-
-    public BuyerRating(){
-        
+    private int sellerID, buyerID;
+    private String itemName, comment;
+    private int satisfaction, payment;
+ 
+    public BuyerRating() {
+  
     }
-    
+
     public int getItemID() {
         return itemID;
     }
@@ -48,6 +45,14 @@ public class BuyerRating {
         this.itemName = itemName;
     }
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
     public int getSatisfaction() {
         return satisfaction;
     }
@@ -64,13 +69,39 @@ public class BuyerRating {
         this.payment = payment;
     }
 
-    public String getComment() {
-        return comment;
+    public void addBuyerRating() {
+        Connection con = DBConnection.openDBConnection();
+        try {
+            String queryString = "insert into SellerRating values(itemID=?, sellerID=?, buyerID=?, itemName=?, satisfaction=?, payment=?, comment=?)";
+            PreparedStatement ps = con.prepareStatement(queryString);
+            ps.clearParameters();
+            ps.setInt(1, this.getItemID());
+            ps.setInt(2, this.getSellerID());
+            ps.setInt(3, this.getBuyerID());
+            ps.setString(4, this.getItemName());
+            ps.setInt(5, this.getSatisfaction());
+            ps.setInt(6, this.getPayment());
+            ps.setString(7, this.getComment());
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    
+    public ResultSet getBuyerRating() {
+        Connection con = DBConnection.openDBConnection();
+        try {
+            Statement stmt = con.createStatement();
+            String qs = "select * from BuyerRating where itemID ='" + this.getItemID()+"'";
+            ResultSet rs = stmt.executeQuery(qs);
+            return rs;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
-    private String comment;
     
 }
+ 

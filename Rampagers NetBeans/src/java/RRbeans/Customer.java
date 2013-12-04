@@ -1,7 +1,5 @@
-package RRbeans;
-
-
-
+package kakutzke.RahalRampagers;
+import java.sql.*;
 
 public class Customer {
     
@@ -108,5 +106,57 @@ public class Customer {
     public void setBuyerRating(int buyerRating) {
         this.buyerRating = buyerRating;
     }
+    
+    public ResultSet getCustomerInfo() {
+      try{
+        Connection con = DBConnection.openDBConnection();
+        ResultSet rs;
+        String queryString = "Select * from Customer where username = '"+this.username+"'";
+        Statement stmt;
+        stmt = con.createStatement();
+        rs = stmt.executeQuery(queryString);
+        return rs;
+      } catch(Exception e) {
+        System.out.println("FAILURE:" + e.getMessage());
+            System.out.println("FAILURE:" + e.getStackTrace());
+        }
+        return null;
+    }
+    
+    public ResultSet getAllBuyerRatings() throws IllegalStateException {
+              try {
+
+            Connection con = DBConnection.openDBConnection();
+            ResultSet rs;
+            Statement stmt;
+            stmt = con.createStatement();
+            String queryString = "Select * from BuyerRating where buyerID = '" + this.getcID() + "'";
+            rs = stmt.executeQuery(queryString);
+            return rs;
+        } catch (Exception e) {
+            System.out.println("FAILURE:" + e.getMessage());
+            System.out.println("FAILURE:" + e.getStackTrace());
+        }
+        return null;
+    }
+    
+    public ResultSet getAllSellerRatings() throws IllegalStateException {
+
+        try {
+
+            Connection con = DBConnection.openDBConnection();
+            ResultSet rs;
+            Statement stmt;
+            stmt = con.createStatement();
+            String queryString = "Select * from SellerRating where sellerID = '" + this.getcID() + "'";
+            rs = stmt.executeQuery(queryString);
+            return rs;
+        } catch (Exception e) {
+            System.out.println("FAILURE:" + e.getMessage());
+            System.out.println("FAILURE:" + e.getStackTrace());
+        }
+        return null;
+    }
+    
     
 }

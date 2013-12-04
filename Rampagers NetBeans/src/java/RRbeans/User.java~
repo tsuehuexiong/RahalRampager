@@ -1,4 +1,4 @@
-package jespringer.RRbeans;
+package RRbeans;
 
 
 import java.sql.*;
@@ -64,7 +64,7 @@ public class User {
             Class.forName("com.mysql.jdbc.Driver");
             // Create a connection to the specified database
             // ("jdbc:mysql://HOSTNAME:PORT/DATABASE","USERNAME","PASSWORD")
-            Connection myConnection = DriverManager.getConnection("jdbc:mysql://devsrv.cs.csbsju.edu:3306/RahalRampagers", "JSpringer", "JSpringer");
+            Connection myConnection = DriverManager.getConnection("jdbc:mysql://devsrv.cs.csbsju.edu:3306/RahalRampager", "JSpringer", "JSpringer");
             return myConnection;
         } catch (Exception E) {
             E.printStackTrace();
@@ -81,7 +81,7 @@ public class User {
             Connection con = openDBConnection();
             ResultSet rs;
             PreparedStatement stmt;
-            String queryString = "Select * from User where username = ? and password = ?";
+            String queryString = "Select * from USER where username like ? and password like ?";
             
             stmt = con.prepareStatement(queryString);
             stmt.clearParameters();

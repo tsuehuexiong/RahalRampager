@@ -9,22 +9,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link href="eSASsheet.css" rel="stylesheet" type="text/css">
 <meta content="text/html; charset=ISO-8859-1"
 http-equiv="content-type">
-<title>test</title>
 <link rel="stylesheet" href="eSASsheet" type="text/css">
 </head>
 <body>
 <ul id="menu">
-<li><a href="#">Sign Out</a></li>
-<li><a href="#">Reports</a>
+<li><a href="Logout_Action">Sign Out</a></li>
+<li><a href="Reports.jsp">Reports</a>
 <ul>
-<li><a href="#">Overall Commission</a></li>
-<li><a href="#">Sales Summary</a></li>
+<li><a href="OverallCommissionReport.jsp">Overall Commission</a></li>
+<li><a href="SalesSummaryReport.jsp">Sales Summary</a></li>
 </ul>
 </li>
-<li><a href="#">User Management</a></li>
-<li><a href="#">eSAS Home</a></li>
+<li><a href="UserManagement.jsp">User Management</a></li>
+<li><a href="AdminHome.jsp">eSAS Home</a></li>
 </ul>
 </body>
 </html>

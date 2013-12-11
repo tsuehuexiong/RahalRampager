@@ -72,7 +72,7 @@ public class BuyerRating {
     public void addBuyerRating() {
         Connection con = DBConnection.openDBConnection();
         try {
-            String queryString = "insert into SellerRating values(itemID=?, sellerID=?, buyerID=?, itemName=?, satisfaction=?, payment=?, comment=?)";
+            String queryString = "insert into BuyerRating values(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(queryString);
             ps.clearParameters();
             ps.setInt(1, this.getItemID());

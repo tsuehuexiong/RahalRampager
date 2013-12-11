@@ -1,4 +1,4 @@
-package jespringer.RRbeans;
+package kakutzke.RahalRampagers;
 
 
 import java.sql.*;
@@ -12,15 +12,15 @@ public class User {
     
     
     /**
-     * The following stores whether or not the customer has successfully logged
-     * to the System
-     */    
+* The following stores whether or not the customer has successfully logged
+* to the System
+*/
     private boolean loggedIn = false;
     
     /**
-     * A getter for class field loggedIn
-     * @return whether the Customer is logged in or not
-     */
+* A getter for class field loggedIn
+* @return whether the Customer is logged in or not
+*/
     public Boolean isLoggedIn() {
         return this.loggedIn;
     }
@@ -53,35 +53,18 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
-    /**
-     * This method and creates and returns a Connection object to the database. 
-     * All other methods that need database access should call this method.
-     * @return a Connection object to the MySQL database
-     */
-    public Connection openDBConnection() {
-        try {
-            // Load driver and link to driver manager
-            Class.forName("com.mysql.jdbc.Driver");
-            // Create a connection to the specified database
-            // ("jdbc:mysql://HOSTNAME:PORT/DATABASE","USERNAME","PASSWORD")
-            Connection myConnection = DriverManager.getConnection("jdbc:mysql://devsrv.cs.csbsju.edu:3306/RahalRampagers", "JSpringer", "JSpringer");
-            return myConnection;
-        } catch (Exception E) {
-            E.printStackTrace();
-        }
-        return null;
-    }
+
     
     /**
-     * Login function to access the features of the website
-     * @return 0 = Customer, 1 = Admin, 2 = Invalid login credentials, 3 for unknown failure
-     */
+* Login function to access the features of the website
+* @return 0 = Customer, 1 = Admin, 2 = Invalid login credentials, 3 for unknown failure
+*/
     public int login(){
         try {
-            Connection con = openDBConnection();
+            Connection con = DBConnection.openDBConnection();
             ResultSet rs;
             PreparedStatement stmt;
-            String queryString = "Select * from User where username = ? and password = ?";
+            String queryString = "Select * from User where username=? and password=?";
             
             stmt = con.prepareStatement(queryString);
             stmt.clearParameters();

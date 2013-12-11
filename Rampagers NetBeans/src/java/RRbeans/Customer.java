@@ -123,6 +123,37 @@ public class Customer {
         return null;
     }
     
+    public ResultSet getOtherCustomerInfo(String uname) {
+      try{
+        Connection con = DBConnection.openDBConnection();
+        ResultSet rs;
+        String queryString = "Select * from Customer where username = '"+uname+"'";
+        Statement stmt;
+        stmt = con.createStatement();
+        rs = stmt.executeQuery(queryString);
+        return rs;
+      } catch(Exception e) {
+        System.out.println("FAILURE:" + e.getMessage());
+            System.out.println("FAILURE:" + e.getStackTrace());
+        }
+        return null;
+    }
+    
+   public void editCustomerInfo(){
+        Connection con = DBConnection.openDBConnection();
+        try{
+            Statement stmt = con.createStatement();
+            String queryString = "update Customer set fName='"+this.getfName()+"', lName='"+this.getlName()+"',"
+              +" email='"+this.getEmail()+"', phone='"+this.getPhone()+"', ccNumber='"+this.getCcNumber()+"',"
+              +" ccExp='"+this.getCcExp()+"', ccType='"+this.getCcType()+"' where username ='"+this.getUsername()+"'";
+            stmt.executeUpdate(queryString);
+            stmt.close();
+            con.close();            
+        } catch (Exception E) {
+            E.printStackTrace();
+        }
+    }
+    
     public ResultSet getAllBuyerRatings() throws IllegalStateException {
               try {
 
@@ -143,12 +174,44 @@ public class Customer {
     public ResultSet getAllSellerRatings() throws IllegalStateException {
 
         try {
-
             Connection con = DBConnection.openDBConnection();
             ResultSet rs;
             Statement stmt;
             stmt = con.createStatement();
             String queryString = "Select * from SellerRating where sellerID = '" + this.getcID() + "'";
+            rs = stmt.executeQuery(queryString);
+            return rs;
+        } catch (Exception e) {
+            System.out.println("FAILURE:" + e.getMessage());
+            System.out.println("FAILURE:" + e.getStackTrace());
+        }
+        return null;
+    }
+    
+       public ResultSet getAllUnratedBoughtItems() throws IllegalStateException {
+              try {
+
+            Connection con = DBConnection.openDBConnection();
+            ResultSet rs;
+            Statement stmt;
+            stmt = con.createStatement();
+            String queryString = "Select * from Item i where i.status=2 and winnerID = '" + this.getcID() + "' and not exists(select * from SellerRating s where i.itemID = s.itemID)";
+            rs = stmt.executeQuery(queryString);
+            return rs;
+        } catch (Exception e) {
+            System.out.println("FAILURE:" + e.getMessage());
+            System.out.println("FAILURE:" + e.getStackTrace());
+        }
+        return null;
+    }
+
+       public ResultSet getAllUnratedSoldItems() throws IllegalStateException {
+              try {
+            Connection con = DBConnection.openDBConnection();
+            ResultSet rs;
+            Statement stmt;
+            stmt = con.createStatement();
+            String queryString = "Select * from Item i where i.status=2 and i.sellerID = '" + this.getcID() + "' and not exists(select * from BuyerRating b where i.itemID = b.itemID)";
             rs = stmt.executeQuery(queryString);
             return rs;
         } catch (Exception e) {

@@ -8,9 +8,9 @@ public class SellerRating {
     private int sellerID, buyerID;
     private String itemName, comment;
     private int satisfaction, quality, delivery;
-	
+ 
     public SellerRating() {
-		
+  
     }
 
     public int getItemID() {
@@ -80,7 +80,7 @@ public class SellerRating {
     public void addSellerRating() {
         Connection con = DBConnection.openDBConnection();
         try {
-            String queryString = "insert into SellerRating values(itemID=?, sellerID=?, buyerID=?, itemName=?, satisfaction=?, quality=?, delivery=?, comment=?)";
+            String queryString = "insert into SellerRating values(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = con.prepareStatement(queryString);
             ps.clearParameters();
             ps.setInt(1, this.getItemID());
@@ -92,7 +92,6 @@ public class SellerRating {
             ps.setInt(7, this.getDelivery());
             ps.setString(8, this.getComment());
             ps.executeUpdate();
-            ps.close();
             con.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -112,4 +111,4 @@ public class SellerRating {
         }
     }
 }
-	
+ 

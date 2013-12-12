@@ -5,7 +5,7 @@
 --%>
 
 <%@ page language="java" import="java.sql.*"%>
-<jsp:useBean id="user" class="jespringer.RRbeans.User" scope="session"/>
+<jsp:useBean id="user" class="jespringer.RahalRampagers.User" scope="session"/>
 <jsp:setProperty name="user" property="*"/>
 <% 
     int state = user.login();

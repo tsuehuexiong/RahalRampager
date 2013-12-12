@@ -4,6 +4,8 @@
     Author     : jespringer
 --%>
 <%@include file="AdminMenu.jsp" %>
+<%@ page language="java" import="java.sql.*"%>
+<jsp:useBean id="user" class="jespringer.RahalRampagers.User" scope="session"/>
 
 <html>
     <head>
@@ -32,29 +34,51 @@
       </td>
       <td style="vertical-align: top;">Seller Rating<br>
       </td>
-      <td style="vertical-align: top;">Comissions<br>
+      <td style="vertical-align: top;">Commissions<br>
       </td>
     </tr>
+    
+    <% 
+    try {
+    ResultSet rs = user.getCommissionReport();
+    ResultSet rs2 = user.getOverallCommission();
+    while (rs.next()){
+    %>
+    
     <tr>
-      <td style="vertical-align: top;">1<br>
+      <td style="vertical-align: top;"><%=rs.getString("cID") %><br>
       </td>
-      <td style="vertical-align: top;">GoodUser<br>
+      <td style="vertical-align: top;"><%=rs.getString("username") %><br>
       </td>
-      <td style="vertical-align: top;">Good<br>
+      <td style="vertical-align: top;"><%=rs.getString("fName") %><br>
       </td>
-      <td style="vertical-align: top;">User<br>
+      <td style="vertical-align: top;"><%=rs.getString("lName") %><br>
       </td>
-      <td style="vertical-align: top;">gooduser@email.com<br>
+      <td style="vertical-align: top;"><%=rs.getString("email") %><br>
       </td>
-      <td style="vertical-align: top;">9<br>
+      <td style="vertical-align: top;"><%=rs.getString("sellerRating") %><br>
       </td>
-      <td style="vertical-align: top;">20<br>
+      <td style="vertical-align: top;"><%=rs.getString("commission") %><br>
       </td>
     </tr>
+    
+    <% 
+    }
+    rs.close();
+    
+    %>
   </tbody>
 </table>
 
 <br>
-
-Total Income<textarea cols="1" rows="1" name="income area">35</textarea><br>
+<% while(rs2.next()){
+    %>
+    Total Income  <span><%=rs2.getString("sum(commission)")%></span><br>
+<%
+    }
+    rs2.close();
+    }
+    catch (Exception e){
+    }
+    %>
 </body></html>

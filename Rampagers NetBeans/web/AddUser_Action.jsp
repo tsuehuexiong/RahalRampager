@@ -4,14 +4,17 @@
     Author     : jespringer
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>%>
+<%@ page language="java" import="java.sql.*"%>
+<jsp:useBean id="newUser" class="jespringer.RahalRampagers.User" scope="session"/>
+<jsp:setProperty name="newUser" property="*"/>
+<jsp:useBean id="newCustomer" class="jespringer.RahalRampagers.Customer" scope="session"/>
+<jsp:setProperty name="newCustomer" property="*"/>
+
+<%
+    newUser.addUser();
+    if (newUser.getIsAdmin() == false){
+        newCustomer.addCustomer();
+    }
+    response.sendRedirect("UserManagement.jsp");
+%>

@@ -4,6 +4,8 @@
     Author     : jespringer
 --%>
 <%@include file="AdminMenu.jsp" %>
+<%@ page language="java" import="java.sql.*"%>
+<jsp:useBean id="user" class="jespringer.RahalRampagers.User" scope="session"/>
 
 <html>
     <head>
@@ -30,18 +32,31 @@
       <td style="vertical-align: top;">Commission<br>
       </td>
     </tr>
+    <% 
+    try {
+    ResultSet rs = user.getSalesSummaryReport();
+    
+    while (rs.next()){
+    %>
     <tr>
-      <td style="vertical-align: top;">CD<br>
+      <td style="vertical-align: top;"><%=rs.getString("category") %><br>
       </td>
-      <td style="vertical-align: top;">123123<br>
+      <td style="vertical-align: top;"><%=rs.getString("itemID") %><br>
       </td>
-      <td style="vertical-align: top;">Stars and Satellites<br>
+      <td style="vertical-align: top;"><%=rs.getString("iName") %><br>
       </td>
-      <td style="vertical-align: top;">10.00<br>
+      <td style="vertical-align: top;"><%=rs.getString("currentBid") %><br>
       </td>
-      <td style="vertical-align: top;">1.00<br>
+      <td style="vertical-align: top;"><%=rs.getString("commission") %><br>
       </td>
     </tr>
+    <% 
+    }
+    rs.close();
+    }
+    catch (Exception e){
+    }
+    %>
   </tbody>
 </table>
 

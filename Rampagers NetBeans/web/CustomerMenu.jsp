@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -34,7 +33,7 @@ http-equiv="content-type">
 <li><a href="#">Check Status</a></li>
 </ul>
 </li>
-<li><a href="CustomerManagement.jsp">eSAS Home</a></li>
+<li><a href="CustomerHome.jsp">eSAS Home</a></li>
 </ul>
 </body>
 </html>

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : CustomerMenu
-    Created on : Oct 11, 2013, 6:06:57 PM
-    Author     : jespringer
---%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,18 +9,16 @@ http-equiv="content-type">
 </head>
 <body>
 <ul id="menu">
-<li><a href="#">Sign Out</a></li>
-<li><a href="#">My Profile</a>
+<li><a href="Login.jsp">Sign Out</a></li>
+<li><a href="MyProfile.jsp">My Profile</a>
 <ul>
-<li><a href="#">My Buyer Feedback</a></li>
-<li><a href="#">My Seller Feedback</a></li>
-<li><a href="#">Update Profile</a></li>
+<li><a href="EditProfile.jsp">Update Profile</a></li>
 </ul>
 </li>
 <li><a href="#">Feedback Management</a>
 <ul>
-<li><a href="#">Rate As Seller</a></li>
-<li><a href="#">Rate As Buyer</a></li>
+<li><a href="Feedback.jsp">My Feedback</a></li>
+<li><a href="PendingFeedback.jsp">Pending Feedback</a></li>
 </ul>
 </li>
 <li><a href="#">Sales Management</a>
@@ -41,7 +33,7 @@ http-equiv="content-type">
 <li><a href="#">Check Status</a></li>
 </ul>
 </li>
-<li><a href="#">eSAS Home</a></li>
+<li><a href="CustomerHome.jsp">eSAS Home</a></li>
 </ul>
 </body>
 </html>

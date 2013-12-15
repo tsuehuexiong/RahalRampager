@@ -4,13 +4,13 @@
 
 <jsp:useBean id="customer" class="jespringer.RahalRampagers.Customer" scope ="session"/>
 
-<link rel="stylesheet" href="esassheet1" type="text/css">
 <title>User Profile</title>
 <%@include file="CustomerMenu.jsp" %>
 <h1>Profile for <%=request.getParameter("user")%></h1>
 
 <div id="profile">
 <%
+    
 int cID=0;
 try {
 ResultSet rs=customer.getOtherCustomerInfo(request.getParameter("user"));
@@ -19,6 +19,7 @@ out.println("No such user<br>");
 } else {
 do {
 cID = rs.getInt("cID");
+
 %>
 
 <table>
@@ -31,17 +32,21 @@ Buyer Rating</td><td><%=rs.getString("buyerRating")%></td></tr>
 <br><br>
 
 <%
-} while(rs.next());
+    
+} 
+while(rs.next());
 }
 rs.close();
-} catch(IllegalStateException ise) {
+} 
+catch(IllegalStateException ise) {
 out.println(ise.getMessage());
 }
 try {
 ResultSet rs = customer.getItemsForSale(cID);
 if(!rs.next()) {
 out.println("No Items for Sale");
-} else {
+} 
+else {
 int count=0;
 do { 
 
@@ -54,10 +59,12 @@ do {
 </td>
 <%
 count++;
-}while(rs.next());
+}
+while(rs.next());
 }
 rs.close();
-} catch(IllegalStateException ise) {
+} 
+catch(IllegalStateException ise) {
 out.println(ise.getMessage());
 }
 %>

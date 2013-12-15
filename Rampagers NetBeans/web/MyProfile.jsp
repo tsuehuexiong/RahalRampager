@@ -45,4 +45,6 @@ rs.close();
 out.println(ise.getMessage());
 }
 %>
+<br>
+<a href="EditProfile.jsp"><button>Edit Profile</button></a>
 </div>

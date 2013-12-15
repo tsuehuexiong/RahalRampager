@@ -15,16 +15,16 @@ http-equiv="content-type">
 <li><a href="EditProfile.jsp">Update Profile</a></li>
 </ul>
 </li>
-<li><a href="#">Feedback Management</a>
+<li><a href="Feedback.jsp">Feedback Management</a>
 <ul>
 <li><a href="Feedback.jsp">My Feedback</a></li>
 <li><a href="PendingFeedback.jsp">Pending Feedback</a></li>
 </ul>
 </li>
-<li><a href="#">Sales Management</a>
+<li><a href="sellmgmt.jsp">Sales Management</a>
 <ul>
-<li><a href="#">List Of Items Sold</a></li>
-<li><a href="#">Add Items</a></li>
+<li><a href="listsold.jsp">List Of Items Sold</a></li>
+<li><a href="additems.jsp">Add Items</a></li>
 </ul>
 </li>
 <li><a href="#">Bidding Management</a>

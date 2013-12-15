@@ -42,7 +42,7 @@ out.println(ise.getMessage());
 
 <div id="profile">
 <center><a href="MyProfile.jsp"><button type="button" align="center">View Profile</button></a>
-    <a href=""><button type="button" align="center">Selling Management</button></a>
+    <a href="sellmgmt.jsp"><button type="button" align="center">Selling Management</button></a>
     <a href=""><button type="button" align="center">Bidding Management</button></a>
 <a href="Feedback.jsp"><button type="button" align="center" >View Feedback</button></a>
 </center>

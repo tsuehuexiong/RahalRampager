@@ -18,5 +18,33 @@ Buyer Rating</td><td><%=customer.getBuyerRating()%></td></tr>
 <br><br>
 <b>Items For Sale</b>
 <br><br>
-Get the items for sale and put them in a table!
+<table>
+<tr>
+<%
+try {
+ResultSet rs = customer.getItemsForSale(customer.getcID());
+if(!rs.next()) {
+out.println("No Items for Sale");
+} else {
+int count=0;
+do { 
+
+%>
+<td>
+<img height=80 width=80 src="<%=rs.getString("photo")%>">
+<br>
+<%=rs.getString("iName")%>;
+
+</td>
+<%
+count++;
+}while(rs.next());
+}
+rs.close();
+} catch(IllegalStateException ise) {
+out.println(ise.getMessage());
+}
+%>
+<br>
+<a href="EditProfile.jsp"><button>Edit Profile</button></a>
 </div>

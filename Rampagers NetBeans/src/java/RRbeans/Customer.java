@@ -220,6 +220,58 @@ public class Customer {
         }
         return null;
     }
+       
+   public ResultSet getItemsForSale(int cID) throws IllegalStateException {
+        try {
+      
+      Connection con = DBConnection.openDBConnection();
+      ResultSet rs;
+      Statement stmt;
+      stmt = con.createStatement();
+      String queryString = "Select itemID,iName,category,auctionStart,auctionEnd,startPrice, status from Item where sellerID = '"
+        + cID +"' and status=0";
+      rs = stmt.executeQuery(queryString);
+      return rs;
+    } catch (Exception e) {
+      System.out.println("FAILURE:" + e.getMessage());
+      System.out.println("FAILURE:" + e.getStackTrace());
+    }
+    return null;
+  }
     
     
+  public ResultSet getItemsSold() throws IllegalStateException {
+    
+    try {
+      
+      Connection con = DBConnection.openDBConnection();
+      ResultSet rs;
+      Statement stmt;
+      stmt = con.createStatement();
+      String queryString = "Select itemID,iName,category,auctionStart,auctionEnd,startPrice, status from Item where sellerID = '"
+        + this.getcID() +"'";
+      rs = stmt.executeQuery(queryString);
+      return rs;
+    } catch (Exception e) {
+      System.out.println("FAILURE:" + e.getMessage());
+      System.out.println("FAILURE:" + e.getStackTrace());
+    }
+    return null;
+  }
+  
+    public ResultSet getCustomerInfo2() {
+    try{
+      Connection con = DBConnection.openDBConnection();
+      ResultSet rs;
+      String queryString = "Select * from Customer where cID = '"+this.cID+"'";
+      Statement stmt;
+      stmt = con.createStatement();
+      rs = stmt.executeQuery(queryString);
+      return rs;
+    } catch(Exception e) {
+      System.out.println("FAILURE:" + e.getMessage());
+      System.out.println("FAILURE:" + e.getStackTrace());
+    }
+    return null;
+  }
 }
